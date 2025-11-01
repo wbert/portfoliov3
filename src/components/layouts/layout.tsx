@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, Github, Linkedin, Mail } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { cn } from "@/lib/utils";
+import { GridPattern } from "@/components/ui/shadcn-io/grid-pattern";
 
 // ---------------------------------
 // Config
@@ -127,10 +129,22 @@ export function Layout({ children }: PortfolioLayoutProps) {
       </header>
 
       {/* Main */}
-      <main id="content" className="flex-1">
-        <div className="mx-auto max-w-5xl px-4 py-12 md:py-16 lg:py-20">
+      <main id="content" className="flex-1 relative">
+        <div className="mx-auto max-w-5xl px-4 py-12 md:py-16 lg:py-20 relative z-10">
           {children}
         </div>
+        <GridPattern
+          width={32}
+          height={32}
+          x={120}
+          y={-40}
+          strokeDasharray="4 4"
+          className={cn(
+            "pointer-events-none absolute right-[-120px] top-0 h-full w-[60%] z-0",
+            "text-muted-foreground/10",
+            "[mask-image:radial-gradient(500px_circle_at_top,white,transparent)]",
+          )}
+        />
       </main>
 
       {/* Footer */}
