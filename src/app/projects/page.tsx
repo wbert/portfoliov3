@@ -13,7 +13,27 @@ import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layouts/layout";
 import { motion } from "framer-motion";
 import { TitleTypingEffect } from "@/components/title-typing-effect";
+import { ExternalLink } from "lucide-react";
+
 const PROJECTS = [
+  {
+    title: "Lantaw",
+    period: "2025–2025",
+    org: "Personal",
+    blurb:
+      "Lantaw is a movie streaming website that allows users to watch movies and TV shows on demand.",
+    stack: [
+      "NestJS",
+      "Redis",
+      "Next",
+      "TMDB",
+      "Docker",
+      "Docker Compose",
+      "Nginx",
+      "Cloudflare",
+    ],
+    links: [{ href: "https://lantaw.wbert.xyz", label: "Site" }],
+  },
   {
     title: "Digi-Sign",
     period: "2025–2025",
@@ -115,7 +135,7 @@ export default function Page() {
               transition={{ delay: 0.05 * i, duration: 0.3, ease: "easeOut" }}
               whileHover={{ y: -3 }}
             >
-              <Card key={p.title} className="flex flex-col">
+              <Card className="flex flex-col h-full border-muted/40 bg-card hover:bg-muted/10 transition-colors">
                 <CardHeader>
                   <CardTitle className="flex flex-col gap-1">
                     <span>{p.title}</span>
@@ -124,18 +144,26 @@ export default function Page() {
                     </span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-muted-foreground">{p.blurb}</p>
+                <CardContent className="space-y-3 flex-1">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {p.blurb}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {p.stack.map((s: string) => (
-                      <Badge key={s} variant="secondary" className="text-xs">
+                      <Badge
+                        key={s}
+                        variant="secondary"
+                        className="text-xs font-normal"
+                      >
                         {s}
                       </Badge>
                     ))}
                   </div>
                 </CardContent>
+
+                {/* Updated Links Section */}
                 {p.links?.length ? (
-                  <CardFooter className="mt-auto flex flex-wrap gap-3">
+                  <CardFooter className="mt-auto flex flex-wrap gap-3 pt-4">
                     {p.links.map((l: { href: string; label: string }) => (
                       <Link
                         key={l.href}
@@ -148,9 +176,10 @@ export default function Page() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="text-sm text-primary underline-offset-4 hover:underline"
+                        className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                       >
-                        {l.label}
+                        <span>{l.label}</span>
+                        <ExternalLink className="h-3 w-3" />
                       </Link>
                     ))}
                   </CardFooter>
