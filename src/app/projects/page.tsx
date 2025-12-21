@@ -67,7 +67,7 @@ const PROJECTS = [
       "Docker Compose",
       "Nginx",
     ],
-    links: [],
+    links: [{ href: "https://vinta-sys.wbert.xyz", label: "Site" }],
   },
   {
     title: "Records Archiving & PDF Signing",
