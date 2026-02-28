@@ -118,5 +118,128 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
+    background-image:
+      radial-gradient(circle at 8% 10%, color-mix(in oklab, var(--foreground) 8%, transparent), transparent 36%),
+      radial-gradient(circle at 85% 0%, color-mix(in oklab, var(--primary) 11%, transparent), transparent 34%);
+    background-attachment: fixed;
   }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(22px, -30px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes drift-reverse {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-24px, 20px, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes pulse-tilt {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.48;
+  }
+  50% {
+    transform: rotate(8deg) scale(1.06);
+    opacity: 0.68;
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.48;
+  }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(76px);
+  opacity: 0.28;
+}
+
+.orb-a {
+  left: -9rem;
+  top: -8rem;
+  height: 18rem;
+  width: 18rem;
+  background: color-mix(in oklab, var(--primary) 46%, transparent);
+  animation: drift 14s ease-in-out infinite;
+}
+
+.orb-b {
+  right: -10rem;
+  top: 24%;
+  height: 19rem;
+  width: 19rem;
+  background: color-mix(in oklab, var(--chart-2) 48%, transparent);
+  animation: drift-reverse 16s ease-in-out infinite;
+}
+
+.orb-c {
+  bottom: -11rem;
+  left: 30%;
+  height: 20rem;
+  width: 20rem;
+  background: color-mix(in oklab, var(--chart-5) 45%, transparent);
+  animation: drift 18s ease-in-out infinite;
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(88px);
+}
+
+.hero-glow-a {
+  top: -7rem;
+  right: -5rem;
+  height: 15rem;
+  width: 15rem;
+  background: color-mix(in oklab, var(--primary) 36%, transparent);
+  animation: pulse-tilt 9s ease-in-out infinite;
+}
+
+.hero-glow-b {
+  bottom: -8rem;
+  left: -4rem;
+  height: 14rem;
+  width: 14rem;
+  background: color-mix(in oklab, var(--chart-1) 31%, transparent);
+  animation: pulse-tilt 12s ease-in-out infinite;
+}
+
+.project-sheen {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 25%, color-mix(in oklab, var(--foreground) 14%, transparent) 50%, transparent 75%);
+  opacity: 0.38;
+}
+
+.contact-wave {
+  pointer-events: none;
+  position: absolute;
+  right: -6rem;
+  top: -5rem;
+  height: 17rem;
+  width: 17rem;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--chart-4) 28%, transparent);
+  filter: blur(70px);
+  opacity: 0.78;
 }

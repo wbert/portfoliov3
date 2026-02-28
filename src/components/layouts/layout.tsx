@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Github, Linkedin, Mail, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,114 +11,174 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, Github, Linkedin, Mail } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { cn } from "@/lib/utils";
-import { GridPattern } from "@/components/ui/shadcn-io/grid-pattern";
+import { LenisButterScroll } from "@/components/lenis-butter-scroll";
+import { butterScrollTo } from "@/lib/butter-scroll";
 
-// ---------------------------------
-// Config
-// ---------------------------------
 const SITE_NAME = "Wbert" as const;
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#contact", label: "Contact" },
 ] as const;
 
 const SOCIAL_LINKS = [
-  { href: "https://github.com/your-username", icon: Github, label: "GitHub" },
-  {
-    href: "https://linkedin.com/in/your-username",
-    icon: Linkedin,
-    label: "LinkedIn",
-  },
-  { href: "mailto:your-email@example.com", icon: Mail, label: "Email" },
+  { href: "https://github.com/wbert", icon: Github, label: "GitHub" },
+  { href: "https://linkedin.com/in/wbert", icon: Linkedin, label: "LinkedIn" },
+  { href: "mailto:wilbertjoshalfornon@gmail.com", icon: Mail, label: "Email" },
 ] as const;
-
-function cx(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
-}
 
 interface PortfolioLayoutProps {
   children: React.ReactNode;
 }
 
-function NavLink({ href, label }: { href: string; label: string }) {
-  const pathname = usePathname();
-  const isActive = href === "/" ? pathname === "/" : pathname?.startsWith(href);
+function AnchorNavLink({
+  href,
+  label,
+  active,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
   return (
-    <Link
+    <a
       href={href}
-      aria-current={isActive ? "page" : undefined}
-      className={cx(
-        "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-        isActive
-          ? "bg-primary/10 text-primary"
-          : "text-muted-foreground hover:bg-accent hover:text-primary",
-      )}
+      onClick={onClick}
+      aria-current={active ? "location" : undefined}
+      className={[
+        "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+        active
+          ? "bg-foreground text-background shadow-lg shadow-foreground/20"
+          : "text-muted-foreground hover:bg-accent hover:text-foreground",
+      ].join(" ")}
     >
       {label}
-    </Link>
+    </a>
   );
 }
 
 export function Layout({ children }: PortfolioLayoutProps) {
+  const [activeItem, setActiveItem] = React.useState<string>("#home");
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const scrollToSection = React.useCallback(
+    (href: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      setActiveItem(href);
+      setMobileOpen(false);
+      butterScrollTo(href, { offset: 104 });
+
+      if (typeof window !== "undefined") {
+        window.history.replaceState({}, "", href);
+      }
+    },
+    [],
+  );
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const sections = NAV_ITEMS.map((item) =>
+      document.getElementById(item.href.slice(1)),
+    ).filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const inView = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (inView[0]) {
+          setActiveItem(`#${inView[0].target.id}`);
+        }
+      },
+      {
+        rootMargin: "-30% 0px -45% 0px",
+        threshold: [0.2, 0.45, 0.7],
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      setActiveItem(hash);
+      window.requestAnimationFrame(() => {
+        butterScrollTo(hash, { offset: 104 });
+      });
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
+      <LenisButterScroll />
+
       <a
-        href="#content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground"
+        href="#home"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-foreground focus:px-3 focus:py-2 focus:text-background"
       >
         Skip to content
       </a>
 
-      {/* Header */}
-      <header className="my-3 sticky top-0 z-50 w-full bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-base font-semibold tracking-tight">
-                {SITE_NAME}
-              </span>
-            </Link>
-          </div>
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="orb orb-a" />
+        <div className="orb orb-b" />
+        <div className="orb orb-c" />
+      </div>
 
-          {/* Desktop nav */}
-          <nav className="m-3 p-3 border rounded-full hidden items-center gap-2 md:flex">
+      <header className="fixed left-0 right-0 top-3 z-50 px-4">
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between rounded-full border border-border/70 bg-background/65 px-3 backdrop-blur-xl md:px-5">
+          <a
+            href="#home"
+            onClick={scrollToSection("#home")}
+            className="rounded-full px-3 py-1 text-sm font-semibold tracking-wide"
+          >
+            {SITE_NAME}
+          </a>
+
+          <nav className="hidden items-center gap-2 md:flex">
             {NAV_ITEMS.map((item) => (
-              <NavLink key={item.href} href={item.href} label={item.label} />
+              <AnchorNavLink
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                active={activeItem === item.href}
+                onClick={scrollToSection(item.href)}
+              />
             ))}
           </nav>
 
-          {/* Right controls */}
-          <div className="flex items-center md:gap-2">
+          <div className="flex items-center gap-1">
             <ThemeToggle />
-
-            {/* Mobile menu */}
             <div className="md:hidden">
-              <Sheet>
+              <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" aria-label="Open menu">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[85vw] sm:w-96">
+                <SheetContent side="right" className="w-[86vw] sm:w-96">
                   <SheetHeader>
                     <SheetTitle className="text-left">{SITE_NAME}</SheetTitle>
                   </SheetHeader>
-
-                  <nav className="mt-6 grid gap-4 ">
+                  <nav className="mt-8 grid gap-4">
                     {NAV_ITEMS.map((item) => (
-                      <Link
+                      <AnchorNavLink
                         key={item.href}
                         href={item.href}
-                        className="rounded-md px-5 py-2 text-lg text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
-                      >
-                        {item.label}
-                      </Link>
+                        label={item.label}
+                        active={activeItem === item.href}
+                        onClick={scrollToSection(item.href)}
+                      />
                     ))}
                   </nav>
                 </SheetContent>
@@ -128,47 +188,29 @@ export function Layout({ children }: PortfolioLayoutProps) {
         </div>
       </header>
 
-      {/* Main */}
-      <main id="content" className="flex-1 relative">
-        <div className="mx-auto max-w-5xl px-4 py-12 md:py-16 lg:py-20 relative z-10">
-          {children}
-        </div>
-        <GridPattern
-          width={32}
-          height={32}
-          x={120}
-          y={-40}
-          strokeDasharray="4 4"
-          className={cn(
-            "pointer-events-none absolute right-[-120px] top-0 h-full w-[60%] z-0",
-            "text-muted-foreground/10",
-            "[mask-image:radial-gradient(500px_circle_at_top,white,transparent)]",
-          )}
-        />
+      <main id="content" className="relative z-10 mx-auto max-w-6xl px-4 pb-14 pt-24 md:px-8">
+        {children}
       </main>
 
-      {/* Footer */}
-      <footer className="w-full border-t bg-background">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-8 sm:px-6 lg:flex-row lg:px-8">
+      <footer className="relative z-10 border-t border-border/60 bg-background/70">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 md:flex-row md:items-center md:justify-between md:px-8">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
           </p>
-
           <div className="flex items-center gap-1">
-            {SOCIAL_LINKS.map((s) => (
+            {SOCIAL_LINKS.map((social) => (
               <Link
-                key={s.label}
-                href={s.href}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
+                key={social.label}
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
                 rel={
-                  s.href.startsWith("http") ? "noopener noreferrer" : undefined
+                  social.href.startsWith("http") ? "noopener noreferrer" : undefined
                 }
-                aria-label={s.label}
+                aria-label={social.label}
                 className="inline-flex"
               >
-                <Button variant="ghost" size="icon">
-                  <s.icon className="h-5 w-5 text-muted-foreground" />
-                  <span className="sr-only">{s.label}</span>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <social.icon className="h-5 w-5 text-muted-foreground" />
                 </Button>
               </Link>
             ))}
