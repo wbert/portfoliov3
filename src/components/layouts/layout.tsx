@@ -51,7 +51,7 @@ function AnchorNavLink({
       onClick={onClick}
       aria-current={active ? "location" : undefined}
       className={[
-        "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
+        "block rounded-full px-5 py-2 text-sm font-medium transition-all duration-300",
         active
           ? "bg-foreground text-background shadow-lg shadow-foreground/20"
           : "text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -166,11 +166,11 @@ export function Layout({ children }: PortfolioLayoutProps) {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[86vw] sm:w-96">
+                <SheetContent side="right" className="w-[86vw] px-3 sm:w-96 sm:px-4">
                   <SheetHeader>
                     <SheetTitle className="text-left">{SITE_NAME}</SheetTitle>
                   </SheetHeader>
-                  <nav className="mt-8 grid gap-4">
+                  <nav className="mt-8 grid gap-4 px-1">
                     {NAV_ITEMS.map((item) => (
                       <AnchorNavLink
                         key={item.href}
