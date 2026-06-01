@@ -85,7 +85,7 @@ const PROJECTS = [
       "NGINX",
       "Docker",
     ],
-    links: [{ href: "https://yearbook.vintasystem.com", label: "Site" }],
+    links: [{ href: "https://pulsecrm.consentmd.ai", label: "Site" }],
   },
   {
     title: "Lantaw",
