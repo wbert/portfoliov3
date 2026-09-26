@@ -1,20 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider"; // <-- Import provider
+import {
+  IBM_Plex_Sans,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Wbert's Portfolio",
-  description: "My personal portfolio website.",
+  title: "Wilbert Josh Alfornon | Full-stack systems developer",
+  description:
+    "Portfolio of Wilbert Josh Alfornon, a Davao City software developer building maintainable web platforms, automation, and public-sector systems.",
 };
 
 export default function RootLayout({
@@ -25,12 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        {/*
-          ThemeProvider wraps everything, but Layout does not.
-          This is the correct pattern.
-        */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

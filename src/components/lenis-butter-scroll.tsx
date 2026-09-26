@@ -51,6 +51,10 @@ function isEditableTarget(target: EventTarget | null) {
   );
 }
 
+function isScrollLocked() {
+  return document.querySelector("dialog[data-scroll-lock][open]") !== null;
+}
+
 export function LenisButterScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -71,12 +75,22 @@ export function LenisButterScroll() {
     };
 
     const onWheel = (event: WheelEvent) => {
+      if (isScrollLocked()) return;
       event.preventDefault();
       setTarget(target + event.deltaY * WHEEL_DRAG);
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.metaKey || event.ctrlKey || event.altKey || isEditableTarget(event.target)) {
+      if (
+        isScrollLocked() ||
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        isEditableTarget(event.target) ||
+        (event.target instanceof Element &&
+          event.target.closest('button, a, [role="menu"], [role="menuitem"]'))
+      ) {
         return;
       }
 
@@ -107,6 +121,7 @@ export function LenisButterScroll() {
     };
 
     const onTouchMove = (event: TouchEvent) => {
+      if (isScrollLocked()) return;
       if (event.touches.length > 1) {
         return;
       }
@@ -136,6 +151,12 @@ export function LenisButterScroll() {
     });
 
     const animate = () => {
+      if (isScrollLocked()) {
+        current = window.scrollY;
+        target = current;
+        frameId = window.requestAnimationFrame(animate);
+        return;
+      }
       target = clamp(target, 0, maxScroll());
       current += (target - current) * SCROLL_EASING;
 

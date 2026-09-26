@@ -1,0 +1,8 @@
+{
+  "last_scan": "2026-06-27",
+  "font_stack": "Space Grotesk + IBM Plex Sans + JetBrains Mono via next/font",
+  "palette": "OKLCH Cobalt tokens in tokens.css and shadcn variables in src/app/globals.css",
+  "motion": "framer-motion installed; redesigned surface uses CSS state transitions only",
+  "spacing": "4-point semantic spacing tokens in tokens.css",
+  "framework": "Next.js 16 app router"
+}

@@ -1,55 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  ExternalLink,
-  Github,
-  Linkedin,
-  Mail,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { Layout } from "@/components/layouts/layout";
-import { RotateWords } from "@/components/rotate-words";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { ProjectPreview } from "@/components/project-preview";
 import { butterScrollTo } from "@/lib/butter-scroll";
 
-const CORE_STACK = [
-  { name: "Laravel", logo: "https://cdn.simpleicons.org/laravel/FF2D20" },
-  { name: "FastAPI", logo: "https://cdn.simpleicons.org/fastapi/009688" },
-  { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
-  { name: "React", logo: "https://cdn.simpleicons.org/react/61DAFB" },
-  { name: "Docker", logo: "https://cdn.simpleicons.org/docker/2496ED" },
+const CAPABILITY_ROWS = [
   {
-    name: "PostgreSQL",
-    logo: "https://cdn.simpleicons.org/postgresql/4169E1",
+    label: "Healthcare",
+    title: "Healthcare Technologies ",
+    body: "Health care systems, EMR, CRM workflows, and agentic AI support for operational teams.",
+  },
+
+  {
+    label: "Public sector",
+    title: "GovTech systems",
+    body: "Profiling and ordinance tracking modules for local process automation, reporting, and information workflows.",
   },
   {
-    name: "TypeScript",
-    logo: "https://cdn.simpleicons.org/typescript/3178C6",
-  },
-  { name: "Python", logo: "https://cdn.simpleicons.org/python/3776AB" },
-  { name: "AWS", logo: "/aws.svg" },
-  {
-    name: "Cloudflare",
-    logo: "https://cdn.simpleicons.org/cloudflare/F38020",
+    label: "Teaching",
+    title: "Faculty + mentorship",
+    body: "Lectures and mentorship across Java, Python, SQL, and machine-learning-aligned software projects.",
   },
 ];
 
-const HIGHLIGHTS = [
+const PROFILE_FACTS = [
+  { value: "3+", label: "Years shipping web apps" },
+  { value: "2026", label: "Backend developer at ConsentMD" },
+  { value: "Davao", label: "Philippines-based, remote-ready" },
+];
+
+const STACK_GROUPS = [
   {
-    title: "GovTech Systems",
-    body: "Built profiling and ordinance tracking modules used for local process automation.",
+    title: "Backend",
+    kicker: "APIs / services",
+    body: "Laravel, FastAPI, NestJS, Node.js, Python, C#, TypeScript",
   },
   {
-    title: "HealthCareTech Systems",
-    body: "Built health care systems, heath care CRM, and agentic AI for local process automation.",
+    title: "Product UI",
+    kicker: "Interfaces",
+    body: "React, Next.js, progressive web app workflows, responsive systems",
   },
   {
-    title: "Teaching + Mentorship",
-    body: "Lectures and mentorship in Java, Python, SQL, and ML-aligned software projects.",
+    title: "Infrastructure",
+    kicker: "Ship path",
+    body: "PostgreSQL, Redis, Docker, NGINX, Cloudflare, AWS, Google Cloud Platform, Vercel",
   },
 ];
 
@@ -58,34 +54,85 @@ const CERTIFICATIONS = [
     title: "IT Specialist - HTML & CSS",
     issuerYear: "Pearson, 2023",
     href: "https://www.credly.com/badges/ade3017d-63bb-4a66-a6fa-854446e2cbf4/public_url",
-    icon: "https://images.credly.com/size/680x680/images/e2dc688d-de61-44a5-81af-ee96f117a211/ITS-Badges_HTML-and-CSS_1200px.png",
+    embedHref:
+      "https://www.credly.com/embedded_badge/ade3017d-63bb-4a66-a6fa-854446e2cbf4",
   },
   {
     title: "IT Specialist - Databases",
     issuerYear: "Pearson, 2023",
     href: "https://www.credly.com/badges/cd4018f7-bc4d-4601-9529-021ad5c6b964/public_url",
-    icon: "https://images.credly.com/size/680x680/images/49a492cd-5f72-4c9d-aafa-06649e4853fb/MicrosoftTeams-image__5_.png",
+    embedHref:
+      "https://www.credly.com/embedded_badge/cd4018f7-bc4d-4601-9529-021ad5c6b964",
   },
 ];
 
 const PROJECTS = [
   {
-    title: "ConsentMD PulseCRM",
+    title: "ConsentMD Plus",
     org: "ConsentMD",
-    period: "2026-2026",
+    period: "2026-Present",
     blurb:
-      "Streamlined relationship management and CRM for health care providers.",
+      "ConsentMD Plus is a web platform for HHA and to run ICD10, Scribe, Forms and other healthcare systems.",
     stack: [
       "NestJS",
-      "NextJS",
+      "Laravel",
+      "Vertex",
+      "Next.js",
       "NeonDB",
       "Google Cloud Platform",
-      "Google Cloud Engine",
+      "Compute Engine",
       "Vercel",
       "NGINX",
       "Docker",
     ],
-    links: [{ href: "https://pulsecrm.consentmd.ai", label: "Site" }],
+    links: [
+      {
+        href: "https://plus.consentmd.ai",
+        label: "Open site",
+      },
+    ],
+  },
+
+  {
+    title: "ConsentMD EMR",
+    org: "ConsentMD",
+    period: "2026-Present",
+    blurb:
+      "Electronic Medical Records (EMR) platform for health care providers.",
+    stack: [
+      "NestJS",
+      "Next.js",
+      "NeonDB",
+      "Google Cloud Platform",
+      "Compute Engine",
+      "Vercel",
+      "NGINX",
+      "Docker",
+    ],
+    links: [
+      {
+        href: "https://consentmd-emr-web.vercel.app/login",
+        label: "Open site",
+      },
+    ],
+  },
+  {
+    title: "ConsentMD PulseCRM",
+    org: "ConsentMD",
+    period: "2026-Present",
+    blurb:
+      "Relationship management and CRM platform for health care providers.",
+    stack: [
+      "NestJS",
+      "Next.js",
+      "NeonDB",
+      "Google Cloud Platform",
+      "Compute Engine",
+      "Vercel",
+      "NGINX",
+      "Docker",
+    ],
+    links: [{ href: "https://pulsecrm.consentmd.ai", label: "Open site" }],
   },
   {
     title: "Lantaw",
@@ -94,16 +141,54 @@ const PROJECTS = [
     blurb:
       "Movie streaming platform with responsive playback and cloud-first deployment.",
     stack: ["NestJS", "Redis", "Next.js", "Docker", "Cloudflare"],
-    links: [{ href: "https://lantaw.wbert.xyz", label: "Site" }],
+    links: [{ href: "https://lantaw.wbert.xyz", label: "Open site" }],
   },
+  {
+    title: "Northpoint Signing App and Archiving",
+    org: "Northpoint",
+    period: "2026-2026",
+    blurb:
+      "Northpoint Signing App and Archiving is a document management and routing system for Northpoint. Where stremlines document submission, signing, and archiving.",
+    stack: [
+      "Hono.js",
+      "Next.js",
+      "Supabase",
+      "AWS lambda",
+      "AWS EventBridge",
+      "AWS SQS",
+      "Vercel",
+      "Cloudinary",
+    ],
+    links: [
+      {
+        href: "https://signing-app-web.vercel.app",
+        label: "Open site",
+      },
+    ],
+  },
+  {
+    title: "Seafarers Accountants",
+    org: "Binks Overseas",
+    period: "2026-2026",
+    blurb:
+      "It is a landing page for the Seafarers Accountants, a small business that provides accounting services to the local community.",
+    stack: ["HTML", "CSS", "Elementor", "WordPress", "Hostinger"],
+    links: [
+      {
+        href: "https://seafarersaccountants.co.uk",
+        label: "Open site",
+      },
+    ],
+  },
+
   {
     title: "Digi-Sign",
     org: "Personal",
     period: "2025",
     blurb:
       "Digital signature workflow that embeds cryptographic metadata into generated PDFs.",
-    stack: ["FastAPI", "React", "PWA", "Docker", "Cron", "Nginx"],
-    links: [{ href: "https://digi-sign.wbert.xyz", label: "Site" }],
+    stack: ["FastAPI", "React", "PWA", "Docker", "Cron", "NGINX"],
+    links: [],
   },
   {
     title: "Vinta System",
@@ -112,14 +197,14 @@ const PROJECTS = [
     blurb:
       "Workflow platform for yearbook collection, schedule orchestration, and logistics.",
     stack: ["Laravel", "React", "PostgreSQL", "Docker"],
-    links: [{ href: "https://vinta-sys.wbert.xyz", label: "Site" }],
+    links: [],
   },
   {
     title: "Records Archiving + Signing",
     org: "Infosoft Studio",
     period: "2024-2025",
     blurb:
-      "Optimized archival generation and signing flow with measurable latency reduction.",
+      "Archival generation and signing flow with measurable latency reduction.",
     stack: ["Laravel", "C#", "Python", "PostgreSQL"],
     links: [],
   },
@@ -137,436 +222,264 @@ const PROJECTS = [
     org: "Vinta Yearbook",
     period: "2022-2024",
     blurb:
-      "Automated data cleanups and naming pipelines to cut manual steps and errors.",
+      "Data cleanup and naming pipelines that reduced manual steps and errors.",
     stack: ["Laravel", "React", "Python", "Firebase"],
-    links: [{ href: "https://yearbook.vintasystem.com", label: "Site" }],
+    links: [{ href: "https://yearbook.vintasystem.com", label: "Open site" }],
   },
 ];
 
 function toSection(hash: string) {
   return (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    butterScrollTo(hash, { offset: 104 });
+    butterScrollTo(hash, { offset: 88 });
     if (typeof window !== "undefined") {
       window.history.replaceState({}, "", hash);
     }
   };
 }
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 56, filter: "blur(6px)" },
-  show: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      delay,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-  }),
-};
-
 export default function Home() {
   return (
     <Layout>
-      <div className="space-y-6 md:space-y-8">
-        <section
-          id="home"
-          className="scroll-mt-28 flex min-h-[calc(100svh-6rem)] items-center"
-        >
-          <div className="relative isolate w-full overflow-hidden rounded-[2.1rem] border border-border/60 bg-background/55 p-6 md:p-8">
-            <motion.div
-              className="pointer-events-none absolute inset-0 -z-10"
-              animate={{ rotate: [0, 6, 0], scale: [1, 1.05, 1] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="hero-glow hero-glow-a" />
-              <div className="hero-glow hero-glow-b" />
-            </motion.div>
-
-            <div className="grid w-full items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
-              <motion.div initial="hidden" animate="show" variants={fadeInUp}>
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-background/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em]">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Building Useful Systems
-                </div>
-                <RotateWords
-                  text="Wilbert Josh Alfornon"
-                  words={["Hello", "Hey", "Wazzup", "Greetings", "Hi"]}
-                />
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                  Software developer and faculty lecturer from Davao City. I
-                  design practical products, automate operational work, and
-                  build software that teams can actually maintain.
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button asChild size="lg" className="rounded-full">
-                    <a href="#projects" onClick={toSection("#projects")}>
-                      Explore Projects
-                      <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="rounded-full"
-                  >
-                    <a href="#contact" onClick={toSection("#contact")}>
-                      Let&apos;s Collaborate
-                    </a>
-                  </Button>
-                </div>
-
-                <div className="mt-6 flex items-center gap-2">
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full"
-                  >
-                    <Link
-                      href="https://github.com/wbert"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github className="h-5 w-5" />
-                      <span className="sr-only">GitHub</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full"
-                  >
-                    <Link
-                      href="https://linkedin.com/in/wbert"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                      <span className="sr-only">LinkedIn</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full"
-                  >
-                    <Link href="mailto:wilbertjoshalfornon@gmail.com">
-                      <Mail className="h-5 w-5" />
-                      <span className="sr-only">Email</span>
-                    </Link>
-                  </Button>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1"
-                initial="hidden"
-                animate="show"
-                variants={fadeInUp}
-                custom={0.15}
-              >
-                <motion.div
-                  className="rounded-3xl border border-border/60 bg-gradient-to-br from-background/90 via-background/75 to-background/50 p-6 shadow-xl shadow-black/5"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{
-                    duration: 6.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                    Years
-                  </p>
-                  <p className="mt-2 text-4xl font-semibold">3+</p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Shipping web apps and systems.
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  className="rounded-3xl border border-border/60 bg-gradient-to-br from-background/90 via-background/75 to-background/50 p-6 shadow-xl shadow-black/5"
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{
-                    duration: 7.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                    Recent Role
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold">
-                    Backend Developer
-                  </p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    ConsentMD, 2026-Present.
-                  </p>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="about"
-          className="min-h-[calc(100svh-8rem)] scroll-mt-28 flex flex-col justify-start space-y-8 py-4"
-        >
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              About
-            </h2>
-            <p className="mt-3 max-w-3xl text-muted-foreground">
-              I build pragmatic software for real process bottlenecks and teach
-              students to move from theory to production-ready code. My work
-              spans web platforms, automation, and government-facing information
-              systems.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-5 md:grid-cols-3">
-            {HIGHLIGHTS.map((item, index) => (
-              <motion.article
-                key={item.title}
-                className="group rounded-3xl border border-border/65 bg-background/60 p-6 backdrop-blur-sm"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-                custom={0.08 * index}
-                variants={fadeInUp}
-                whileHover={{ y: -6, rotate: index % 2 === 0 ? 1 : -1 }}
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {item.body}
-                </p>
-              </motion.article>
-            ))}
-          </div>
-
-          <motion.div
-            className="rounded-3xl border border-border/65 bg-background/60 p-6"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            custom={0.25}
-            variants={fadeInUp}
-          >
-            <h3 className="text-lg font-semibold">Core Stack</h3>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
-              {CORE_STACK.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.03 }}
-                  whileHover={{ y: -4, scale: 1.04 }}
-                  className="group rounded-2xl border border-border/60 bg-background/75 p-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.06]">
-                      <img
-                        src={skill.logo}
-                        alt={`${skill.name} logo`}
-                        className="h-6 w-6 object-contain transition-transform duration-300 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    </div>
-                    <p className="text-sm font-medium">{skill.name}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="rounded-3xl border border-border/65 bg-background/60 p-6"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            custom={0.28}
-            variants={fadeInUp}
-          >
-            <h3 className="text-lg font-semibold">Certifications</h3>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
-              {CERTIFICATIONS.map((cert) => (
-                <article
-                  key={cert.title}
-                  className="rounded-2xl border border-border/60 bg-background/75 p-4"
-                >
-                  <div className="flex items-start gap-3">
-                    <img
-                      src={cert.icon}
-                      alt={`${cert.title} badge`}
-                      className="h-14 w-14 rounded-xl border border-border/60 object-cover"
-                      loading="lazy"
-                    />
-                    <div>
-                      <p className="font-medium">{cert.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {cert.issuerYear}
-                      </p>
-                      <Link
-                        href={cert.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 inline-flex items-center gap-1 text-sm text-primary underline-offset-4 hover:underline"
-                      >
-                        Credential
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        <section
-          id="projects"
-          className="min-h-[calc(100svh-8rem)] scroll-mt-28 flex flex-col justify-start space-y-8 pt-1 pb-4"
-        >
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
-            variants={fadeInUp}
-          >
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Projects
-            </h2>
-            <p className="mt-3 max-w-3xl text-muted-foreground">
-              Selected work across automation, public sector software, and
-              production deployments.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            {PROJECTS.map((project, index) => (
-              <motion.article
-                key={project.title}
-                className="group relative overflow-hidden rounded-3xl border border-border/65 bg-background/70 p-6"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.15 }}
-                custom={index * 0.05}
-                variants={fadeInUp}
-                whileHover={{ y: -8 }}
-              >
-                <motion.div
-                  className="project-sheen"
-                  initial={{ x: "-120%" }}
-                  whileHover={{ x: "120%" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                />
-
-                <div className="relative z-10">
-                  <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                    {project.org} · {project.period}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {project.blurb}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.stack.map((tech) => (
-                      <Badge
-                        key={`${project.title}-${tech}`}
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {project.links.length > 0 ? (
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {project.links.map((link) => (
-                        <Button
-                          key={link.href}
-                          asChild
-                          size="sm"
-                          className="rounded-full"
-                        >
-                          <Link
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {link.label}
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Link>
-                        </Button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="contact"
-          className="min-h-[calc(100svh-8rem)] scroll-mt-28 flex items-center py-4"
-        >
-          <motion.div
-            className="relative w-full overflow-hidden rounded-[2rem] border border-border/65 bg-background/65 p-8 md:p-10"
-            initial={{ opacity: 0, y: 48 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <motion.div
-              className="contact-wave"
-              animate={{ rotate: [0, 10, 0], scale: [1, 1.12, 1] }}
-              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="relative z-10 max-w-3xl">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Let&apos;s Build Something Wild
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                Open to collaborations on full-stack products, automation,
-                education technology, and infrastructure-backed deployments.
+      <div className="portfolio-page">
+        <section id="home" className="portfolio-hero">
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <p className="mono-label">Full-stack systems / Davao City</p>
+              <h1 className="hero-title">Systems that survive handoff.</h1>
+              <p className="hero-lede">
+                I build practical products, automate operational work, and teach
+                software teams how to move from theory to production-ready code.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild size="lg" className="rounded-full">
-                  <Link href="mailto:wilbertjoshalfornon@gmail.com">
-                    Email Me
-                    <Mail className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full"
+
+              <div className="hero-actions">
+                <a
+                  href="#projects"
+                  onClick={toSection("#projects")}
+                  className="action-link action-link--primary"
                 >
-                  <a href="#home" onClick={toSection("#home")}>
-                    Back to Top
-                    <ArrowRight className="h-4 w-4 rotate-[-90deg]" />
-                  </a>
-                </Button>
+                  View work
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </a>
+                <Link
+                  href="mailto:wilbertjoshalfornon@gmail.com"
+                  className="action-link action-link--secondary"
+                >
+                  Email Wilbert
+                </Link>
+              </div>
+
+              <div className="hero-links" aria-label="Profile links">
+                <Link
+                  href="https://github.com/wbert"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="action-link action-link--ghost"
+                >
+                  <Github aria-hidden="true" className="h-4 w-4" />
+                  GitHub
+                </Link>
+                <Link
+                  href="https://linkedin.com/in/wbert"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="action-link action-link--ghost"
+                >
+                  <Linkedin aria-hidden="true" className="h-4 w-4" />
+                  LinkedIn
+                </Link>
               </div>
             </div>
-          </motion.div>
+
+            <aside className="hero-console" aria-label="Profile facts">
+              <div className="console-grid">
+                <div className="console-row">
+                  <span className="console-label">Role</span>
+                  <strong>Backend Developer / DevOps Engineer</strong>
+                </div>
+                <div className="console-row">
+                  <span className="console-label">Current</span>
+                  <strong>ConsentMD / 2026-Present</strong>
+                </div>
+                <div className="console-row">
+                  <span className="console-label">Work mode</span>
+                  <strong>Systems, automation, teaching</strong>
+                </div>
+              </div>
+              <pre className="console-pre">
+                <span className="accent">$</span>
+                {
+                  " build --scope operations\ngovtech/profiling\nhealthcare/crm\nyearbook/logistics\nteaching/java-python-sql"
+                }
+              </pre>
+            </aside>
+          </div>
+        </section>
+
+        <section id="about" className="section-block">
+          <div className="section-intro">
+            <h2 className="section-title">What I build around</h2>
+            <p className="section-copy">
+              The through-line is operational software: tools that organize
+              records, reduce repeat work, support local teams, and stay
+              maintainable after launch.
+            </p>
+          </div>
+
+          <div className="capability-list">
+            {CAPABILITY_ROWS.map((item) => (
+              <article key={item.title} className="capability-row">
+                <p className="project-meta">{item.label}</p>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+                <span aria-hidden="true" />
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="profile-strip" aria-label="Profile summary">
+          {PROFILE_FACTS.map((fact) => (
+            <div key={fact.label} className="profile-strip__item">
+              <span className="profile-strip__value">{fact.value}</span>
+              <span className="profile-strip__label">{fact.label}</span>
+            </div>
+          ))}
+        </section>
+
+        <section id="projects" className="section-block">
+          <div className="section-intro">
+            <h2 className="section-title">Project ledger</h2>
+            <p className="section-copy">
+              Selected work across automation, public-sector information
+              systems, CRM, media delivery, document signing, and production
+              deployment.
+            </p>
+          </div>
+
+          <div className="project-ledger">
+            {PROJECTS.map((project, index) => (
+              <article key={project.title} className="ledger-row">
+                <span className="ledger-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p className="project-meta">
+                    {project.org} / {project.period}
+                  </p>
+                  <h3>{project.title}</h3>
+                  <p>{project.blurb}</p>
+                  <div className="project-stack" aria-label="Project stack">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={`${project.title}-${tech}`}
+                        className="tech-pill"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="project-links">
+                  {project.links.length > 0 ? (
+                    project.links.map((link) => (
+                      <ProjectPreview
+                        key={link.href}
+                        href={link.href}
+                        title={project.title}
+                      />
+                    ))
+                  ) : (
+                    <span className="project-meta">Private build</span>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="section-intro">
+            <h2 className="section-title">Stack, in context</h2>
+            <p className="section-copy">
+              Tools are selected for the job: API shape first, deployment path
+              second, interface last. The point is a system someone else can run
+              after handoff.
+            </p>
+          </div>
+
+          <div className="stack-grid">
+            {STACK_GROUPS.map((group) => (
+              <article key={group.title} className="stack-group">
+                <p className="stack-kicker">{group.kicker}</p>
+                <h3>{group.title}</h3>
+                <p>{group.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <div className="section-intro">
+            <h2 className="section-title">Credentials</h2>
+            <p className="section-copy">
+              Certification and teaching sit beside the production work: the
+              same concepts need to hold up in class, in code review, and in
+              deployment.
+            </p>
+          </div>
+
+          <div className="cert-list">
+            {CERTIFICATIONS.map((cert) => (
+              <article key={cert.title} className="cert-row">
+                <p className="cert-meta">{cert.issuerYear}</p>
+                <div>
+                  <h3>{cert.title}</h3>
+                  <p>Pearson credential.</p>
+                </div>
+                <ProjectPreview
+                  href={cert.href}
+                  embedHref={cert.embedHref}
+                  title={cert.title}
+                  label="Verify credential"
+                />
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="contact-band">
+          <p className="contact-line">
+            Have a system that keeps creating manual work?
+          </p>
+          <div>
+            <p className="contact-copy">
+              I am open to collaborations on full-stack products, automation,
+              education technology, and infrastructure-backed deployments.
+            </p>
+            <div className="hero-actions">
+              <Link
+                href="mailto:wilbertjoshalfornon@gmail.com"
+                className="action-link action-link--primary"
+              >
+                Email me
+                <Mail aria-hidden="true" className="h-4 w-4" />
+              </Link>
+              <a
+                href="#home"
+                onClick={toSection("#home")}
+                className="action-link action-link--secondary"
+              >
+                Back to top
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 rotate-[-90deg]"
+                />
+              </a>
+            </div>
+          </div>
         </section>
       </div>
     </Layout>
